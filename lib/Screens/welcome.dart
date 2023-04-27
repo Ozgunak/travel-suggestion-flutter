@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:travel/helper/constants.dart';
-
-class TravelModel {
-  String title;
-
-  TravelModel({required this.title});
-}
-
-class TravelModels {
-  static List<TravelModel> list = [
-    TravelModel(title: 'Quiet place'),
-    TravelModel(title: 'Romantic trip'),
-    TravelModel(title: 'Adventure trip'),
-  ];
-}
+import 'package:travel/helper/constants.dart' as constants;
+import 'package:travel/models/travel-model.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -32,26 +19,31 @@ class WelcomeScreen extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(Constants.welcomeImage),
+                image: AssetImage(constants.welcomeImage),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              // Navigator.push(context, route);
-            },
-            child: Container(
-              height: 250,
-              alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(bottom: 30),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return CategoryWidget(title: TravelModels.list[index].title);
-                },
-              ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    constants.welcomeTitleText,
+                    style: GoogleFonts.neucha(
+                      fontSize: 58,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                ),
+                CategorySection(),
+              ],
             ),
           ),
         ],
@@ -60,8 +52,36 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
+class CategorySection extends StatelessWidget {
+  const CategorySection({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // Navigator.push(context, route);
+      },
+      child: Container(
+        height: 250,
+        alignment: Alignment.bottomCenter,
+        padding: EdgeInsets.only(bottom: 30),
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return CategoryWidget(title: TravelModels.list[index].title);
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class CategoryWidget extends StatelessWidget {
-  CategoryWidget({super.key,
+  CategoryWidget({
+    super.key,
     required this.title,
   });
 

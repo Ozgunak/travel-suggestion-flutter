@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/Screens/catalog-screen.dart';
 import 'package:travel/Screens/welcome.dart';
 
 void main() {
@@ -11,7 +12,9 @@ class TravelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: WelcomeScreen(),
+      debugShowCheckedModeBanner: false,
+      home: CatalogScreen(),
+
     );
   }
 }
