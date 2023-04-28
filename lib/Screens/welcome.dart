@@ -59,21 +59,22 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navigator.push(context, route);
-      },
-      child: Container(
-        height: 250,
-        alignment: Alignment.bottomCenter,
-        padding: EdgeInsets.only(bottom: 30),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return CategoryWidget(title: TravelModels.list[index].title);
-          },
-        ),
+    return Container(
+      height: 250,
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.only(bottom: 30),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/catalog',
+                  arguments: TravelModels.list[index].title);
+            },
+            child: CategoryWidget(title: TravelModels.list[index].title),
+          );
+        },
       ),
     );
   }
@@ -100,7 +101,7 @@ class CategoryWidget extends StatelessWidget {
         height: 200,
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 40.0, right: 10.0, top: 20, bottom: 30),
+              left: 40.0, right: 10.0, top: 10, bottom: 30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,

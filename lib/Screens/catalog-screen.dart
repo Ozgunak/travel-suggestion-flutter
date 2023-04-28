@@ -1,17 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel/helper/constants.dart' as constants;
-
-class CataglogCategory {
-  final String title;
-  final IconData icon;
-
-  CataglogCategory({
-    required this.title,
-    required this.icon,
-  });
-}
+import 'package:travel/models/catalog-model.dart';
+import 'package:travel/models/country-model.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({Key? key}) : super(key: key);
@@ -22,35 +13,27 @@ class CatalogScreen extends StatefulWidget {
 
 class _CatalogScreenState extends State<CatalogScreen> {
   int selectedIndex = 0;
-  List<CataglogCategory> categories = [
-    CataglogCategory(
-      title: 'Quiet place',
-      icon: Icons.home,
-    ),
-    CataglogCategory(
-      title: 'Romantic trip',
-      icon: Icons.favorite,
-    ),
-    CataglogCategory(
-      title: 'Adventure trip',
-      icon: Icons.directions_bike,
-    ),
-  ];
+
+  void onSelectedIndexChange(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
         child: CatalogAppBar(),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Quiet place',
+              constants.catalogTitle,
               style: GoogleFonts.neucha(
                 fontSize: 58,
                 fontWeight: FontWeight.w700,
@@ -58,66 +41,127 @@ class _CatalogScreenState extends State<CatalogScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            SizedBox(
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: index == selectedIndex
-                            ? const Color(0xFFA6CDC3)
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedIndex = index;
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                categories[index].icon,
-                                color: index == selectedIndex
-                                    ? Colors.white
-                                    : Colors.black87,
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                categories[index].title,
-                                style: GoogleFonts.neucha(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: index == selectedIndex
-                                      ? Colors.white
-                                      : Colors.black87,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            categoryWidget(),
+            const SizedBox(height: 20),
+            countryWidget(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget categoryWidget() {
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: CatalogData.categories.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: index == selectedIndex
+                    ? Colors.white
+                    : const Color(0xFFA6CDC3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: OutlinedButton(
+                onPressed: () {
+                  onSelectedIndexChange(index);
+                },
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        CatalogData.categories[index].icon,
+                        color: index == selectedIndex
+                            ? Colors.black87
+                            : Colors.white,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        CatalogData.categories[index].title,
+                        style: GoogleFonts.neucha(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: index == selectedIndex
+                              ? Colors.black87
+                              : Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class countryWidget extends StatelessWidget {
+  const countryWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+          itemCount: CountryData.countries.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(100),
+                  topRight: Radius.circular(100),
+                ),
+              ),
+              elevation: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(100),
+                        topRight: Radius.circular(100),
+                      ),
+                      child: Image.asset(
+                        CountryData.countries[index].imagePath,
+                        fit: BoxFit.cover,
+                        // height: 250,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Text(
+                      CountryData.countries[index].name,
+                      style: GoogleFonts.neucha(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }

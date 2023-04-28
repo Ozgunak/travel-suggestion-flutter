@@ -11,9 +11,15 @@ class TravelApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CatalogScreen(),
-    );
+    return MaterialApp(
+        theme: ThemeData(
+            colorScheme: ColorScheme.light(background: Color(0xFFA6CDC3)),
+            useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        home: WelcomeScreen(),
+        routes: {
+          '/catalog': (context) => CatalogScreen(),
+          '/welcome': (context) => WelcomeScreen(),
+        });
   }
 }
