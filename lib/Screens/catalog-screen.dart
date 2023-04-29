@@ -43,7 +43,54 @@ class _CatalogScreenState extends State<CatalogScreen> {
             const SizedBox(height: 20),
             categoryWidget(),
             const SizedBox(height: 20),
-            countryWidget(),
+            // countryWidget(),
+            GridView.builder(
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              shrinkWrap: true,
+              itemCount: CountryData.countries.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(100),
+                      topRight: Radius.circular(100),
+                    ),
+                  ),
+                  elevation: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(100),
+                            topRight: Radius.circular(100),
+                          ),
+                          child: Image.asset(
+                            CountryData.countries[index].imagePath,
+                            fit: BoxFit.cover,
+                            // height: 250,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Text(
+                          CountryData.countries[index].name,
+                          style: GoogleFonts.neucha(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
@@ -109,61 +156,54 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 }
 
-class countryWidget extends StatelessWidget {
-  const countryWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: ListView.builder(
-          itemCount: CountryData.countries.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(100),
-                  topRight: Radius.circular(100),
+Widget countryWidget() {
+  return SizedBox(
+    height: 300,
+    child: ListView.builder(
+        itemCount: CountryData.countries.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(100),
+                topRight: Radius.circular(100),
+              ),
+            ),
+            elevation: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(100),
+                      topRight: Radius.circular(100),
+                    ),
+                    child: Image.asset(
+                      CountryData.countries[index].imagePath,
+                      fit: BoxFit.cover,
+                      // height: 250,
+                    ),
+                  ),
                 ),
-              ),
-              elevation: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(100),
-                        topRight: Radius.circular(100),
-                      ),
-                      child: Image.asset(
-                        CountryData.countries[index].imagePath,
-                        fit: BoxFit.cover,
-                        // height: 250,
-                      ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Text(
+                    CountryData.countries[index].name,
+                    style: GoogleFonts.neucha(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Text(
-                      CountryData.countries[index].name,
-                      style: GoogleFonts.neucha(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
-    );
-  }
+                ),
+              ],
+            ),
+          );
+        }),
+  );
 }
 
 class CatalogAppBar extends StatelessWidget {
