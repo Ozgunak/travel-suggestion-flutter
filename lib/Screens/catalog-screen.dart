@@ -1,209 +1,174 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:travel/helper/constants.dart' as constants;
-import 'package:travel/models/catalog-model.dart';
 import 'package:travel/models/country-model.dart';
 
 class CatalogScreen extends StatefulWidget {
-  const CatalogScreen({Key? key}) : super(key: key);
+  const CatalogScreen({Key? key, required this.selectedCountry})
+      : super(key: key);
+
+  static const routeName = '/detail';
+
+  final CountryModel selectedCountry;
 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
-  int selectedIndex = 0;
+  String selectedHotelCategory = 'All';
+  String selectedAttractionCategory = 'All';
+  String selectedActivityCategory = 'All';
+  late CountryModel selectedCountry;
 
-  void onSelectedIndexChange(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    selectedCountry = widget.selectedCountry;
   }
 
   @override
   Widget build(BuildContext context) {
+    // CountryModel selectedCountry = widget.selectedCountry;
+
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
-        child: CatalogAppBar(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              constants.catalogTitle,
-              style: GoogleFonts.neucha(
-                fontSize: 58,
-                fontWeight: FontWeight.w700,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 20),
-            categoryWidget(),
-            const SizedBox(height: 20),
-            // countryWidget(),
-            GridView.builder(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              shrinkWrap: true,
-              itemCount: CountryData.countries.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      topRight: Radius.circular(100),
-                    ),
-                  ),
-                  elevation: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(100),
-                            topRight: Radius.circular(100),
-                          ),
-                          child: Image.asset(
-                            CountryData.countries[index].imagePath,
-                            fit: BoxFit.cover,
-                            // height: 250,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(
-                          CountryData.countries[index].name,
-                          style: GoogleFonts.neucha(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          expandedHeight: 300,
+          pinned: true,
+          flexibleSpace: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              double topPadding = MediaQuery.of(context).padding.top;
+              double percentage =
+                  (constraints.maxHeight - topPadding - kToolbarHeight) /
+                      (300 - topPadding - kToolbarHeight);
+              double opacity = (1 - percentage).clamp(0, 1);
 
-  Widget categoryWidget() {
-    return SizedBox(
-      height: 50,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: CatalogData.categories.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: index == selectedIndex
-                    ? Colors.white
-                    : const Color(0xFFA6CDC3),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: OutlinedButton(
-                onPressed: () {
-                  onSelectedIndexChange(index);
-                },
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 10),
-                  child: Row(
-                    children: [
-                      Icon(
-                        CatalogData.categories[index].icon,
-                        color: index == selectedIndex
-                            ? Colors.black87
-                            : Colors.white,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        CatalogData.categories[index].title,
-                        style: GoogleFonts.neucha(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: index == selectedIndex
-                              ? Colors.black87
-                              : Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-Widget countryWidget() {
-  return SizedBox(
-    height: 300,
-    child: ListView.builder(
-        itemCount: CountryData.countries.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Card(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(100),
-                topRight: Radius.circular(100),
-              ),
-            ),
-            elevation: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      topRight: Radius.circular(100),
-                    ),
-                    child: Image.asset(
-                      CountryData.countries[index].imagePath,
-                      fit: BoxFit.cover,
-                      // height: 250,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
+              return FlexibleSpaceBar(
+                title: AnimatedOpacity(
+                  opacity: opacity,
+                  duration: const Duration(milliseconds: 300),
                   child: Text(
-                    CountryData.countries[index].name,
-                    style: GoogleFonts.neucha(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
-                    ),
+                    selectedCountry.name,
+                    style: GoogleFonts.neucha(color: Colors.black),
                   ),
                 ),
-              ],
-            ),
-          );
-        }),
-  );
+                background: Hero(
+                  tag: selectedCountry.name,
+                  child: Image.asset(
+                    selectedCountry.imagePath,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    sectionTitle('Attractions'),
+                    filterChips(
+                        selectedCountry.attractions, selectedAttractionCategory,
+                        (value) {
+                      setState(() {
+                        selectedAttractionCategory = value;
+                      });
+                    }),
+                    SizedBox(height: 8),
+                    ...buildAttractionList(),
+                    SizedBox(height: 8),
+                    sectionTitle('Hotels'),
+                    filterChips(selectedCountry.hotels, selectedHotelCategory,
+                        (value) {
+                      setState(() {
+                        selectedHotelCategory = value;
+                      });
+                    }),
+                    SizedBox(height: 8),
+                    ...buildHotelList(),
+                    SizedBox(height: 8),
+                    sectionTitle('Activities'),
+                    filterChips(
+                        selectedCountry.activities, selectedActivityCategory,
+                        (value) {
+                      setState(() {
+                        selectedActivityCategory = value;
+                      });
+                    }),
+                    SizedBox(height: 8),
+                    ...buildActivityList(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ));
+  }
+
+  Text sectionTitle(String title) =>
+      Text(title, style: TextStyle(fontSize: 24));
+
+  SingleChildScrollView filterChips(Map<String, List<String>> categories,
+      String selectedCategory, Function(String) onSelected) {
+    int totalCount =
+        categories.values.fold(0, (count, items) => count + items.length);
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          FilterChip(
+            label: Text('All ($totalCount)'),
+            selected: selectedCategory == 'All',
+            onSelected: (_) => onSelected('All'),
+          ),
+          ...categories.entries
+              .map(
+                (entry) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: FilterChip(
+                    label: Text('${entry.key} (${entry.value.length})'),
+                    selected: selectedCategory == entry.key,
+                    onSelected: (_) => onSelected(entry.key),
+                  ),
+                ),
+              )
+              .toList(),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> buildAttractionList() => buildFilteredList(
+      selectedCountry.attractions, selectedAttractionCategory);
+
+  List<Widget> buildHotelList() =>
+      buildFilteredList(selectedCountry.hotels, selectedHotelCategory);
+
+  List<Widget> buildActivityList() =>
+      buildFilteredList(selectedCountry.activities, selectedActivityCategory);
+
+  List<Widget> buildFilteredList(
+      Map<String, List<String>> items, String selectedCategory) {
+    List<String> filteredItems;
+
+    if (selectedCategory == 'All') {
+      filteredItems = items.values.expand((e) => e).toList();
+    } else {
+      filteredItems = items[selectedCategory]!;
+    }
+
+    return filteredItems.map((item) => ListTile(title: Text(item))).toList();
+  }
 }
 
 class CatalogAppBar extends StatelessWidget {
@@ -226,21 +191,6 @@ class CatalogAppBar extends StatelessWidget {
         ),
       ),
       //  action profile image
-      actions: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {},
-            child: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png'),
-            ),
-          ),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-      ],
     );
   }
 }
