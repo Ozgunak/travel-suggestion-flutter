@@ -1,5 +1,4 @@
 class CountryModel {
-  final int id;
   final String name;
   final String imagePath;
   final Map<String, List<String>> hotels;
@@ -7,7 +6,6 @@ class CountryModel {
   final Map<String, List<String>> activities;
 
   CountryModel({
-    required this.id,
     required this.name,
     required this.imagePath,
     required this.hotels,
@@ -34,7 +32,6 @@ class CountryData {
 // Food & Drink: Sampling delicious Turkish cuisine
 
     CountryModel(
-        id: 0,
         name: 'Turkey',
         imagePath: 'assets/images/ic_tur.jpeg',
         hotels: {
@@ -79,67 +76,7 @@ class CountryData {
             'Sampling delicious Turkish cuisine',
           ],
         }),
-// Spain:
-// Attractions:
-//
-// Architectural: La Sagrada Familia, Park Güell, The Alhambra
-// Museums: The Prado Museum, Guggenheim Museum Bilbao
-// City Squares & Streets: Plaza Mayor, Madrid, La Rambla, Barcelona
-// Hotels:
-//
-// Luxury: Hotel Alfonso XIII, Seville, Mandarin Oriental, Barcelona, Hotel Ritz, Madrid
-// Historic: Gran Hotel Miramar, Malaga
-// Activities:
-//
-// Entertainment: Attending a flamenco show
-// Food & Drink: Wine tasting and vineyard tours, exploring Spanish cuisine through tapas
-// Cultural: Visiting historic sites, such as the Alhambra
-// Leisure: Enjoying the beaches and nightlife of Ibiza
 
-    CountryModel(
-        id: 1,
-        name: 'Spain',
-        imagePath: 'assets/images/ic_spa.png',
-        hotels: {
-          'Luxury': [
-            'Hotel Alfonso XIII, Seville',
-            'Mandarin Oriental, Barcelona',
-            'Hotel Ritz, Madrid',
-          ],
-          'Historic': [
-            'Gran Hotel Miramar, Malaga',
-          ],
-        },
-        attractions: {
-          'Architectural': [
-            'La Sagrada Familia',
-            'Park Güell',
-            'The Alhambra',
-          ],
-          'Museums': [
-            'The Prado Museum',
-            'Guggenheim Museum Bilbao',
-          ],
-          'City Squares & Streets': [
-            'Plaza Mayor, Madrid',
-            'La Rambla, Barcelona',
-          ],
-        },
-        activities: {
-          'Entertainment': [
-            'Attending a flamenco show',
-          ],
-          'Food & Drink': [
-            'Wine tasting and vineyard tours',
-            'Exploring Spanish cuisine through tapas',
-          ],
-          'Cultural': [
-            'Visiting historic sites, such as the Alhambra',
-          ],
-          'Leisure': [
-            'Enjoying the beaches and nightlife of Ibiza',
-          ],
-        }),
 // France:
 // Attractions:
 //
@@ -157,7 +94,6 @@ class CountryData {
 // Nature: Visiting the lavender fields of Provence
 // Cultural: Exploring the art galleries and museums of Paris
     CountryModel(
-        id: 2,
         name: 'France',
         imagePath: 'assets/images/ic_fra.jpeg',
         hotels: {
@@ -218,7 +154,6 @@ class CountryData {
 // Leisure: Discovering Canadian cuisine, visiting wineries in the Okanagan Valley
 // Wildlife: Whale watching, polar bear spotting in Churchill
     CountryModel(
-        id: 3,
         name: 'Canada',
         imagePath: 'assets/images/ic_can.png',
         hotels: {
@@ -285,7 +220,6 @@ class CountryData {
 // Leisure: Visiting Australian wineries, exploring Sydney and Melbourne
 // Wildlife: Watching kangaroos, koalas, and other native species
     CountryModel(
-        id: 4,
         name: 'Australia',
         imagePath: 'assets/images/ic_aus.jpeg',
         hotels: {
@@ -334,7 +268,61 @@ class CountryData {
             'Watching kangaroos, koalas, and other native species',
           ],
         }),
+// Spain:
+// Attractions:
+//
+// Architectural: La Sagrada Familia, Park Güell, The Alhambra
+// Museums: The Prado Museum, Guggenheim Museum Bilbao
+// City Squares & Streets: Plaza Mayor, Madrid, La Rambla, Barcelona
+// Hotels:
+//
+// Luxury: Hotel Alfonso XIII, Seville, Mandarin Oriental, Barcelona, Hotel Ritz, Madrid
+// Historic: Gran Hotel Miramar, Malaga
+// Activities:
+//
+// Entertainment: Attending a flamenco show
+// Food & Drink: Wine tasting and vineyard tours, exploring Spanish cuisine through tapas
+// Cultural: Visiting historic sites, such as the Alhambra
+// Leisure: Enjoying the beaches and nightlife of Ibiza
 
+    CountryModel(name: 'Spain', imagePath: 'assets/images/ic_spa.png', hotels: {
+      'Luxury': [
+        'Hotel Alfonso XIII, Seville',
+        'Mandarin Oriental, Barcelona',
+        'Hotel Ritz, Madrid',
+      ],
+      'Historic': [
+        'Gran Hotel Miramar, Malaga',
+      ],
+    }, attractions: {
+      'Architectural': [
+        'La Sagrada Familia',
+        'Park Güell',
+        'The Alhambra',
+      ],
+      'Museums': [
+        'The Prado Museum',
+        'Guggenheim Museum Bilbao',
+      ],
+      'City Squares & Streets': [
+        'Plaza Mayor, Madrid',
+        'La Rambla, Barcelona',
+      ],
+    }, activities: {
+      'Entertainment': [
+        'Attending a flamenco show',
+      ],
+      'Food & Drink': [
+        'Wine tasting and vineyard tours',
+        'Exploring Spanish cuisine through tapas',
+      ],
+      'Cultural': [
+        'Visiting historic sites, such as the Alhambra',
+      ],
+      'Leisure': [
+        'Enjoying the beaches and nightlife of Ibiza',
+      ],
+    }),
 // Germany:
 // Attractions:
 //
@@ -353,7 +341,6 @@ class CountryData {
 // Leisure: Driving on the Autobahn, shopping in Berlin and Munich
 // Nature: Hiking in the Black Forest, cruising along the Rhine River
     CountryModel(
-        id: 6,
         name: 'Germany',
         imagePath: 'assets/images/ic_ger.png',
         hotels: {
@@ -421,7 +408,6 @@ class CountryData {
 // Food & Drink: Sampling Filipino cuisine, including adobo, sinigang, and lechon
 // write example philippines CountryModel
     CountryModel(
-        id: 7,
         name: 'Philippines',
         imagePath: 'assets/images/ic_phi.jpeg',
         hotels: {

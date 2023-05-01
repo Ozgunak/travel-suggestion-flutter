@@ -57,32 +57,28 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: CountryData.countries.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            print('tapped $index');
-                            Navigator.pushNamed(
-                              context,
-                              CatalogScreen.routeName,
-                              arguments: CountryData.countries[index],
-                            );
-                          },
-                          child: countryCardWidget(index));
-                    },
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: CountryData.countries.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            CatalogScreen.routeName,
+                            arguments: CountryData.countries[index],
+                          );
+                        },
+                        child: countryCardWidget(index));
+                  },
+                ),
+              ],
             ),
           ),
         ],
@@ -119,18 +115,18 @@ Widget countryCardWidget(int index) {
             ),
           ),
         ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.only(left: 18.0),
-          child: Text(
-            CountryData.countries[index].name,
-            style: GoogleFonts.neucha(
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-              color: Colors.black87,
-            ),
-          ),
-        ),
+        // const SizedBox(height: 10),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 18.0),
+        //   child: Text(
+        //     CountryData.countries[index].name,
+        //     style: GoogleFonts.neucha(
+        //       fontSize: 28,
+        //       fontWeight: FontWeight.w700,
+        //       color: Colors.black87,
+        //     ),
+        //   ),
+        // ),
       ],
     ),
   );
