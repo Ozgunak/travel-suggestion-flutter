@@ -1,5 +1,7 @@
 # Travel Suggestion: Your Ultimate Travel Companion
 
+![Simulator Screen Recording - iPhone 14 - 2023-05-01 at 00 38 49](https://user-images.githubusercontent.com/64470656/235425799-57e2b258-2bf1-4802-8d1e-e63e2ebba2ff.gif)
+
 This Flutter project showcases a responsive and interactive UI for a travel app, featuring key
 widgets such as StatefulWidget, Scaffold, CustomScrollView, SliverAppBar, SliverList,
 FilterChip, and ListTile. The app allows users to explore and filter attractions, hotels, and
@@ -9,7 +11,6 @@ activities based on selected categories, providing an engaging and dynamic user 
 
 * About The Project
 * Getting Started
-* Screenshots
 * License
 
 ## About The Project
@@ -33,10 +34,6 @@ Clone the repo
 ```
 git@github.com:Ozgunak/travel-suggestion-flutter.git
 ```
-
-## Screenshots and GIFS
-
-![Simulator Screen Recording - iPhone 14 - 2023-05-01 at 00 38 49](https://user-images.githubusercontent.com/64470656/235425799-57e2b258-2bf1-4802-8d1e-e63e2ebba2ff.gif)
 
 ## License
 
