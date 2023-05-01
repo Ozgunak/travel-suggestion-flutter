@@ -113,26 +113,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
     ));
   }
 
-  void onExpansionChanged(int index, bool isExpanded) {
-    setState(() {
-      for (int i = 0; i < expandedStatus.length; i++) {
-        expandedStatus[i] = (i == index) ? isExpanded : !isExpanded;
-      }
-
-      switch (index) {
-        case 0:
-          selectedAttractionCategory = isExpanded ? '' : 'All';
-          break;
-        case 1:
-          selectedHotelCategory = isExpanded ? '' : 'All';
-          break;
-        case 2:
-          selectedActivityCategory = isExpanded ? '' : 'All';
-          break;
-      }
-    });
-  }
-
   Text sectionTitle(String title) =>
       Text(title, style: const TextStyle(fontSize: 24));
 
