@@ -19,6 +19,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   String selectedAttractionCategory = 'All';
   String selectedActivityCategory = 'All';
   late CountryModel selectedCountry;
+  List<bool> expandedStatus = List.filled(3, false);
 
   @override
   void initState() {
@@ -28,8 +29,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // CountryModel selectedCountry = widget.selectedCountry;
-
     return Scaffold(
         body: CustomScrollView(
       slivers: [
@@ -67,7 +66,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
@@ -81,9 +80,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         selectedAttractionCategory = value;
                       });
                     }),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ...buildAttractionList(),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     sectionTitle('Hotels'),
                     filterChips(selectedCountry.hotels, selectedHotelCategory,
                         (value) {
@@ -91,9 +90,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         selectedHotelCategory = value;
                       });
                     }),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ...buildHotelList(),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     sectionTitle('Activities'),
                     filterChips(
                         selectedCountry.activities, selectedActivityCategory,
@@ -102,7 +101,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         selectedActivityCategory = value;
                       });
                     }),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ...buildActivityList(),
                   ],
                 ),
@@ -114,8 +113,28 @@ class _CatalogScreenState extends State<CatalogScreen> {
     ));
   }
 
+  void onExpansionChanged(int index, bool isExpanded) {
+    setState(() {
+      for (int i = 0; i < expandedStatus.length; i++) {
+        expandedStatus[i] = (i == index) ? isExpanded : !isExpanded;
+      }
+
+      switch (index) {
+        case 0:
+          selectedAttractionCategory = isExpanded ? '' : 'All';
+          break;
+        case 1:
+          selectedHotelCategory = isExpanded ? '' : 'All';
+          break;
+        case 2:
+          selectedActivityCategory = isExpanded ? '' : 'All';
+          break;
+      }
+    });
+  }
+
   Text sectionTitle(String title) =>
-      Text(title, style: TextStyle(fontSize: 24));
+      Text(title, style: const TextStyle(fontSize: 24));
 
   SingleChildScrollView filterChips(Map<String, List<String>> categories,
       String selectedCategory, Function(String) onSelected) {
@@ -167,7 +186,33 @@ class _CatalogScreenState extends State<CatalogScreen> {
       filteredItems = items[selectedCategory]!;
     }
 
-    return filteredItems.map((item) => ListTile(title: Text(item))).toList();
+    return filteredItems
+        .map((item) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Card(
+                elevation: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 4.0, top: 2, bottom: 2),
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ))
+        .toList();
   }
 }
 
@@ -190,7 +235,6 @@ class CatalogAppBar extends StatelessWidget {
           color: Colors.black87,
         ),
       ),
-      //  action profile image
     );
   }
 }
